@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance Log</title>
+    <link rel="stylesheet" href="../static/css/log_style.css">
+</head>
+<body>
+    <h1>Attendance Log</h1>
+    <img src="../static/images/attendance.jpg">
+    <a href="{% url 'home' %}">Back to Home</a>
+
+    <form method="POST" action="{% url 'log' %}">
+        {% csrf_token %}
+        <label for="course_filter">Filter by Course:</label>
+        <input type="text" id="course_filter" name="course_filter" value="{{ course_filter_value|default:'' }}">
+
+        <label for="date_filter">Filter by Date:</label>
+        <input type="date" id="date_filter" name="date_filter" value="{{ date_filter_value|default:'' }}">
+
+        <input type="submit" value="Filter">
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Course</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+                <tr>
+                    <td>{{ record.student_name }}</td>
+                    <td>{{ record.course }}</td>
+                    <td>{{ record.attendance_date }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">No attendance records found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

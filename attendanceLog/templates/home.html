@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>This is the home page</title>
+    <link rel="stylesheet" href="../static/css/home_style.css>
+</head>
+<body>
+    <h1>This is the Home Page</h1>
+
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+
+    <form method="POST" action="{% url 'home' %}">
+        {% csrf_token %}
+        <label for="student_name">Student Name:</label>
+        <input type="text" id="student_name" name="student_name" required>
+
+        <label for="course">Course:</label>
+        <input type="text" id="course" name="course" required>
+
+        <label for="attendance_date">Date:</label>
+        <input type="date" id="attendance_date" name="attendance_date" required><br><br>
+
+        <input type="submit" value="Submit Attendance">
+    </form>
+
+    <a href="{% url 'log' %}">View Attendance Log</a>
+</body>
+</html>
